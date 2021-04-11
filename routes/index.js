@@ -1,11 +1,11 @@
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const user = require('./user');
 
+const app = express();
 
-const app = express()
+app.use(express.json());
 
-// app.use('/api/market', market)
+app.use('/api/user', user);
 // app.use('/api/stock', ticker)
 
-
-module.exports = app
+module.exports = app;
