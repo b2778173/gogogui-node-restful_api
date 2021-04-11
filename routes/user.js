@@ -12,12 +12,8 @@ router.get('/', (req, res) => {
             .auth()
             .listUsers(1000, nextPageToken)
             .then((listUsersResult) => {
-                const userList = [];
-                listUsersResult.users.forEach((userRecord) => {
-                    console.log('user', userRecord.toJSON());
-                    userList.push(userRecord.toJSON());
-                });
-                res.status(200).send({ message: userList });
+                console.log(listUsersResult.users);
+                res.status(200).send({ message: listUsersResult.users });
                 if (listUsersResult.pageToken) {
                     // List next batch of users.
                     listAllUsers(listUsersResult.pageToken);
