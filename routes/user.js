@@ -3,7 +3,7 @@ const admin = require('firebase-admin');
 
 const router = express.Router();
 
-admin.initializeApp();
+// admin.initializeApp();
 
 router.get('/', (req, res) => {
     const listAllUsers = (nextPageToken) => {
