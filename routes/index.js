@@ -1,15 +1,16 @@
 const express = require('express');
 const cors = require('cors');
-const auth = require('../utils/auth');
+const auth = require('../middleware/auth');
 const user = require('./user');
+const portfolio = require('./portfolio');
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(auth);
+// app.use(auth);
 
 app.use('/api/user', user);
-// app.use('/api/stock', ticker)
+app.use('/api/portfolio', portfolio);
 
 module.exports = app;

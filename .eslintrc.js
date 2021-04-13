@@ -14,5 +14,6 @@ module.exports = {
         'func-names': ['warn', 'never'],
         'no-console': 'off',
         'space-before-function-paren': 0,
+        'consistent-return': 'off',
     },
 };
