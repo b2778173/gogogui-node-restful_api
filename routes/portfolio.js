@@ -5,8 +5,12 @@ const { Portfolio, validate } = require('../models/portfolio');
 
 router.get('/:uid', async (req, res) => {
     const { uid } = req.params;
-    const portfolio = await Portfolio.find({ uid });
-    res.send(portfolio);
+    try {
+        const portfolio = await Portfolio.find({ uid });
+        res.send({ result: portfolio });
+    } catch (e) {
+        res.status(400).send(e.message);
+    }
 });
 
 router.post('/:uid', async (req, res) => {
@@ -39,7 +43,7 @@ router.post('/:uid', async (req, res) => {
             });
         }
         await portfolio.save();
-        res.send({ message: portfolio });
+        res.send({ result: portfolio });
     } catch (e) {
         res.status(400).send(e.message);
     }

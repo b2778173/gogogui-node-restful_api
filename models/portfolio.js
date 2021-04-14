@@ -30,6 +30,10 @@ const Portfolio = mongoose.model(
                 type: Number,
                 required: true,
             },
+            quantity: {
+                type: Number,
+                require: true,
+            },
             marketPrice: {
                 type: Number,
                 required: true,

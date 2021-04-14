@@ -19,6 +19,7 @@ const auth = (req, res, next) => {
         .then((decodedToken) => {
             const { uid } = decodedToken;
             console.log('uid', uid);
+            req.currentUser = decodedToken;
             // ...
             next();
         })

@@ -51,7 +51,7 @@ router.post('/', (req, res) => {
         })
         .then((userRecord) => {
             // See the UserRecord reference doc for the contents of userRecord.
-            res.status(201).send({ message: `Successfully created new user:${userRecord.uid}` });
+            res.status(201).send({ result: `Successfully created new user:${userRecord.uid}` });
         })
         .catch((error) => {
             res.status(403).send({ message: `Error creating new user:${error}` });

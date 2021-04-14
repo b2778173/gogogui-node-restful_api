@@ -8,7 +8,8 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-// app.use(auth);
+// verify token middleware (idToken need be granted from frontend)
+app.use(auth);
 
 app.use('/api/user', user);
 app.use('/api/portfolio', portfolio);
