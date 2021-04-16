@@ -3,5 +3,6 @@
     "singleQuote": true,
     "tabWidth": 4,
     "endOfLine": "auto",
-    "eslintIntegration": true
+    "eslintIntegration": true,
+    "trailingComma": "none"
 }
