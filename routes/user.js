@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
         password,
         displayName,
         photoURL,
-        disabled,
+        disabled
     } = req.body;
     admin
         .auth()
@@ -47,7 +47,7 @@ router.post('/', (req, res) => {
             password,
             displayName,
             photoURL,
-            disabled,
+            disabled
         })
         .then((userRecord) => {
             // See the UserRecord reference doc for the contents of userRecord.

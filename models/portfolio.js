@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const History = new mongoose.Schema({
     quantity: Number,
     tradeTime: Date,
-    tradePrice: Number,
+    tradePrice: Number
 });
 const Portfolio = mongoose.model(
     'portfolio',
@@ -15,41 +15,41 @@ const Portfolio = mongoose.model(
                 required: true,
                 minlength: 1,
                 maxlength: 50,
-                unique: true,
+                unique: true
             },
             companyName: {
                 type: String,
                 required: true,
                 minlength: 1,
-                maxlength: 50,
+                maxlength: 50
             },
             history: {
-                type: [History],
+                type: [History]
             },
             tradePrice: {
                 type: Number,
-                required: true,
+                required: true
             },
             quantity: {
                 type: Number,
-                require: true,
+                require: true
             },
             marketPrice: {
                 type: Number,
-                required: true,
+                required: true
             },
             profitPercentage: {
                 type: Number,
-                default: 0,
+                default: 0
             },
             memo: {
-                type: String,
+                type: String
             },
             uid: {
                 type: String,
                 required: true,
-                minlength: 1,
-            },
+                minlength: 1
+            }
         },
         { collection: 'portfolio' }
     )
@@ -58,7 +58,7 @@ const Portfolio = mongoose.model(
 function validate(body) {
     const history = Joi.object({
         quantity: Joi.number(),
-        tradePrice: Joi.number(),
+        tradePrice: Joi.number()
     });
     const schema = Joi.object({
         symbol: Joi.string().min(1).max(50).required(),
@@ -69,7 +69,7 @@ function validate(body) {
         profit: Joi.number(),
         profitPercentage: Joi.number(),
         history: Joi.array().items(history),
-        memo: Joi.string(),
+        memo: Joi.string()
     });
 
     return schema.validate(body);
@@ -77,5 +77,5 @@ function validate(body) {
 
 module.exports = {
     Portfolio,
-    validate,
+    validate
 };

@@ -29,7 +29,7 @@ router.post('/:uid', async (req, res) => {
             portfolio.history.push({
                 quantity,
                 tradePrice,
-                tradeTime: new Date(),
+                tradeTime: new Date()
             });
         } else {
             portfolio = new Portfolio({
@@ -39,7 +39,7 @@ router.post('/:uid', async (req, res) => {
                 marketPrice,
                 history: [{ quantity, tradePrice, tradeTime: new Date() }],
                 memo,
-                uid: req.params.uid,
+                uid: req.params.uid
             });
         }
         await portfolio.save();
