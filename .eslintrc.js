@@ -12,6 +12,7 @@ module.exports = {
     rules: {
         // 'prettier/prettier': 2, // 0表示被prettier标记的地方不抛出错误信息。
         'func-names': ['warn', 'never'],
+        camelcase: ['error', { allow: ['api_key'] }],
         'no-console': 'off',
         'space-before-function-paren': 0,
         'consistent-return': 'off',
