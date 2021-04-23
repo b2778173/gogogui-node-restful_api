@@ -9,7 +9,11 @@ router.get('/', (req, res) => {
         if (error) {
             res.send({ message: error.response.text });
         } else {
-            res.send({ result: data });
+            const result = data.map((e) => {
+                e.key = e.id.toString();
+                return e;
+            });
+            res.send({ result });
         }
     });
 });
@@ -20,7 +24,11 @@ router.get('/company_news', (req, res) => {
         if (error) {
             res.send({ message: error.response.text });
         } else {
-            res.send({ result: data });
+            const result = data.map((e) => {
+                e.key = e.id.toString();
+                return e;
+            });
+            res.send({ result });
         }
     });
 });
