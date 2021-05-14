@@ -1,11 +1,13 @@
 const express = require('express');
 const admin = require('firebase-admin');
+// verify token middleware (idToken need be granted from frontend)
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 
 // admin.initializeApp();
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     const listAllUsers = (nextPageToken) => {
         // List batch of users, 1000 at a time.
         admin
@@ -27,7 +29,7 @@ router.get('/', (req, res) => {
     listAllUsers();
 });
 // create user
-router.post('/', (req, res) => {
+router.post('/', auth, (req, res) => {
     console.log(req.body);
     const {
         email,

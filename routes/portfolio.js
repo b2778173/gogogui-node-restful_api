@@ -1,9 +1,11 @@
 const express = require('express');
+// verify token middleware (idToken need be granted from frontend)
+const auth = require('../middleware/auth');
 
 const router = express.Router();
 const { Portfolio, validate } = require('../models/portfolio');
 
-router.get('/:uid', async (req, res) => {
+router.get('/:uid', auth, async (req, res) => {
     const { uid } = req.params;
     try {
         const portfolio = await Portfolio.find({ uid });
@@ -13,7 +15,7 @@ router.get('/:uid', async (req, res) => {
     }
 });
 
-router.post('/:uid', async (req, res) => {
+router.post('/:uid', auth, async (req, res) => {
     try {
         // validation
         const { error } = validate(req.body);
