@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-// const auth = require('../middleware/auth');
+const auth = require('../middleware/auth');
 const user = require('./user');
 const market = require('./finnhub/market');
 const stock = require('./finnhub/stock');
@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('combined'));
 // verify token middleware (idToken need be granted from frontend)
-// app.use(auth);
+app.use(auth);
 
 app.use('/api/user', user);
 app.use('/api/news', market);
