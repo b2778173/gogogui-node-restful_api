@@ -10,7 +10,7 @@ const auth = (req, res, next) => {
 
     const idToken = req.header('idToken');
     if (!idToken) {
-        res.status(400).send({ message: 'header idToken is required' });
+        res.status(401).send({ message: 'header idToken is required' });
         return;
     }
     admin
@@ -26,7 +26,7 @@ const auth = (req, res, next) => {
         .catch((error) => {
             // Handle error
             // console.log(error);
-            res.status(400).send({ message: error });
+            res.status(401).send({ message: error });
         });
 };
 
