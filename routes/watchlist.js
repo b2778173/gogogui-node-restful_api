@@ -1,5 +1,5 @@
 const express = require('express');
-const finnhubClient = require('./finnhub/index');
+const axios = require('axios');
 
 const router = express.Router();
 const { Watchlist, validate } = require('../models/watchlist');
@@ -7,10 +7,10 @@ const { Watchlist, validate } = require('../models/watchlist');
 // symbol lookup
 router.get('/getSymbolList', async (req, res) => {
     try {
-        const currency = 'US';
-        finnhubClient.stockSymbols(currency, async (error, data) => {
-            res.send({ result: data });
-        });
+        const r = await axios(
+            `https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${process.env.API_KEY}`
+        );
+        res.send({ result: r.data });
     } catch (e) {
         console.log(e);
         res.send({ message: e });
