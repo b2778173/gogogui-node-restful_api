@@ -1,5 +1,5 @@
 const express = require('express');
-const axios = require('axios');
+const finnhubClient = require('./finnhub/index');
 
 const router = express.Router();
 const { Watchlist, validate } = require('../models/watchlist');
@@ -7,10 +7,10 @@ const { Watchlist, validate } = require('../models/watchlist');
 // symbol lookup
 router.get('/getSymbolList', async (req, res) => {
     try {
-        const r = await axios(
-            `https://financialmodelingprep.com/api/v3/search?query=AA&limit=10&exchange=NASDAQ&apikey=demo`
-        );
-        res.send({ result: r.data });
+        const currency = 'US';
+        finnhubClient.stockSymbols(currency, async (error, data) => {
+            res.send({ result: data });
+        });
     } catch (e) {
         console.log(e);
         res.send({ message: e });
@@ -32,6 +32,7 @@ router.post('/addWatchlist', async (req, res) => {
         await addedWatchlist.save();
         res.send({ result: addedWatchlist });
     } catch (e) {
+        console.log(e);
         res.status(400).send(e.message);
     }
 });

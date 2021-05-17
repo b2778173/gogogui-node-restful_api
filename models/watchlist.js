@@ -28,10 +28,12 @@ const Watchlist = mongoose.model(
 function validate(body) {
     const schema = Joi.object({
         symbol: Joi.string().min(1).max(8).required(),
-        name: Joi.string(),
+        description: Joi.string(),
         currency: Joi.string(),
-        stockExchange: Joi.string(),
-        exchangeShortName: Joi.string()
+        displaySymbol: Joi.string(),
+        figi: Joi.string(),
+        mic: Joi.string(),
+        type: Joi.string()
     });
     return schema.validate(body);
 }
