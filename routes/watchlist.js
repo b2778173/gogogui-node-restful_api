@@ -37,12 +37,12 @@ router.post('/addWatchlist', async (req, res) => {
     }
 });
 
-router.post('/rmWatchlist', async (req, res) => {
+router.delete('/rmWatchlist', async (req, res) => {
     try {
         // validation
-        const { error } = validate(req.body);
+        const { error } = validate(req.query);
         if (error) return res.status(400).send({ message: error.details[0].message });
-        const { symbol } = req.body;
+        const { symbol } = req.query;
         // eslint-disable-next-line no-underscore-dangle
         const _id = symbol;
 
