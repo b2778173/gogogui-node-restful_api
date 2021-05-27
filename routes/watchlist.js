@@ -1,21 +1,7 @@
 const express = require('express');
-const axios = require('axios');
 
 const router = express.Router();
 const { Watchlist, validate } = require('../models/watchlist');
-
-// symbol lookup
-router.get('/getSymbolList', async (req, res) => {
-    try {
-        const r = await axios(
-            `https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${process.env.API_KEY}`
-        );
-        res.send({ result: r.data });
-    } catch (e) {
-        console.log(e);
-        res.send({ message: e });
-    }
-});
 
 router.post('/addWatchlist', async (req, res) => {
     try {

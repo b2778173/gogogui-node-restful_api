@@ -53,4 +53,17 @@ router.get('/quote', (req, res) => {
     });
 });
 
+// get all symbol list
+router.get('/getSymbolList', async (req, res) => {
+    try {
+        const r = await axios(
+            `https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${process.env.API_KEY}`
+        );
+        res.send({ result: r.data });
+    } catch (e) {
+        console.log(e);
+        res.send({ message: e });
+    }
+});
+
 module.exports = router;
