@@ -8,7 +8,7 @@ const Watchlist = mongoose.model(
             _id: {
                 type: String,
                 minlength: 1,
-                maxlength: 10,
+                maxlength: 10
             },
             marketCap: {
                 type: String,
@@ -19,6 +19,11 @@ const Watchlist = mongoose.model(
             price: {
                 type: String,
                 required: false
+            },
+            uid: {
+                type: String,
+                required: true,
+                minlength: 1
             }
         },
         { collection: 'watchlist' }

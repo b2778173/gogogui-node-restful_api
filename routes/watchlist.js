@@ -2,8 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 const { Watchlist, validate } = require('../models/watchlist');
+const auth = require('../middleware/auth');
 
-router.post('/addWatchlist', async (req, res) => {
+router.post('/', auth, async (req, res) => {
+    const { uid } = req.currentUser;
     try {
         // validation
         const { error } = validate(req.body);
@@ -13,17 +15,18 @@ router.post('/addWatchlist', async (req, res) => {
         const _id = symbol;
 
         const addedWatchlist = new Watchlist({
-            _id
+            _id,
+            uid
         });
         await addedWatchlist.save();
         res.send({ result: addedWatchlist });
     } catch (e) {
-        console.log(e);
-        res.status(400).send(e.message);
+        // console.log(e);
+        res.status(400).send({ message: e.message });
     }
 });
 
-router.delete('/rmWatchlist', async (req, res) => {
+router.delete('/', auth, async (req, res) => {
     try {
         // validation
         const { error } = validate(req.query);
@@ -42,9 +45,10 @@ router.delete('/rmWatchlist', async (req, res) => {
     }
 });
 
-router.get('/getAllWatchlist', async (req, res) => {
+router.get('/', auth, async (req, res) => {
+    const { uid } = req.currentUser;
     try {
-        const watchlist = await Watchlist.find({});
+        const watchlist = await Watchlist.find({ uid });
         res.send({ result: watchlist });
     } catch (e) {
         console.log(e);
