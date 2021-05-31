@@ -14,7 +14,7 @@ router.get('/:uid', auth, async (req, res) => {
         res.status(400).send(e.message);
     }
 });
-
+// delete = quantity -1
 router.post('/:uid', auth, async (req, res) => {
     try {
         // validation

@@ -13,6 +13,11 @@ router.post('/', auth, async (req, res) => {
         const { symbol } = req.body;
         // eslint-disable-next-line no-underscore-dangle
         const _id = symbol;
+        // check is unique first
+        const num = await Watchlist.count({ _id, uid });
+        if (num) {
+            throw new Error('symbol already exist');
+        }
 
         const addedWatchlist = new Watchlist({
             _id,
@@ -21,12 +26,13 @@ router.post('/', auth, async (req, res) => {
         await addedWatchlist.save();
         res.send({ result: addedWatchlist });
     } catch (e) {
-        // console.log(e);
+        console.log(e);
         res.status(400).send({ message: e.message });
     }
 });
 
 router.delete('/', auth, async (req, res) => {
+    const { uid } = req.currentUser;
     try {
         // validation
         const { error } = validate(req.query);
@@ -35,13 +41,19 @@ router.delete('/', auth, async (req, res) => {
         // eslint-disable-next-line no-underscore-dangle
         const _id = symbol;
 
-        const removedWatchlist = new Watchlist({
-            _id
+        // check is not unique first
+        const num = await Watchlist.count({ _id, uid });
+        if (!num) {
+            throw new Error('watchlist not found');
+        }
+        // const removedWatchlist = new Watchlist();
+        const result = await Watchlist.remove({
+            _id,
+            uid
         });
-        await removedWatchlist.remove();
-        res.send({ result: removedWatchlist });
+        res.send({ result: `${result.deletedCount} document delete` });
     } catch (e) {
-        res.status(400).send(e.message);
+        res.status(400).send({ message: e.message });
     }
 });
 
