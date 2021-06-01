@@ -11,16 +11,14 @@ router.post('/', auth, async (req, res) => {
         const { error } = validate(req.body);
         if (error) return res.status(400).send({ message: error.details[0].message });
         const { symbol } = req.body;
-        // eslint-disable-next-line no-underscore-dangle
-        const _id = symbol;
         // check is unique first
-        const num = await Watchlist.count({ _id, uid });
+        const num = await Watchlist.count({ symbol, uid });
         if (num) {
             throw new Error('symbol already exist');
         }
 
         const addedWatchlist = new Watchlist({
-            _id,
+            symbol,
             uid
         });
         await addedWatchlist.save();
@@ -39,16 +37,15 @@ router.delete('/', auth, async (req, res) => {
         if (error) return res.status(400).send({ message: error.details[0].message });
         const { symbol } = req.query;
         // eslint-disable-next-line no-underscore-dangle
-        const _id = symbol;
 
         // check is not unique first
-        const num = await Watchlist.count({ _id, uid });
+        const num = await Watchlist.count({ symbol, uid });
         if (!num) {
             throw new Error('watchlist not found');
         }
         // const removedWatchlist = new Watchlist();
         const result = await Watchlist.remove({
-            _id,
+            symbol,
             uid
         });
         res.send({ result: `${result.deletedCount} document delete` });

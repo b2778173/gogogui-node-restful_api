@@ -5,8 +5,8 @@ const auth = require('../middleware/auth');
 const router = express.Router();
 const { Portfolio, validate } = require('../models/portfolio');
 
-router.get('/:uid', auth, async (req, res) => {
-    const { uid } = req.params;
+router.get('/', auth, async (req, res) => {
+    const { uid } = req.currentUser;
     try {
         const portfolio = await Portfolio.find({ uid });
         res.send({ result: portfolio });
@@ -15,17 +15,18 @@ router.get('/:uid', auth, async (req, res) => {
     }
 });
 // delete = quantity -1
-router.post('/:uid', auth, async (req, res) => {
+router.post('/', auth, async (req, res) => {
     try {
         // validation
         const { error } = validate(req.body);
         if (error) return res.status(400).send({ message: error.details[0].message });
 
-        req.body.uid = req.params.uid;
+        // req.body.uid = req.params.uid;
+        const { uid } = req.currentUser;
 
         let portfolio = null;
         const { symbol, companyName, quantity, tradePrice, marketPrice, memo } = req.body;
-        portfolio = await Portfolio.findOne({ symbol });
+        portfolio = await Portfolio.findOne({ symbol, uid });
 
         if (portfolio) {
             portfolio.history.push({
@@ -41,7 +42,7 @@ router.post('/:uid', auth, async (req, res) => {
                 marketPrice,
                 history: [{ quantity, tradePrice, tradeTime: new Date() }],
                 memo,
-                uid: req.params.uid
+                uid
             });
         }
         await portfolio.save();

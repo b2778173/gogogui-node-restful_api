@@ -14,8 +14,7 @@ const Portfolio = mongoose.model(
                 type: String,
                 required: true,
                 minlength: 1,
-                maxlength: 50,
-                unique: true
+                maxlength: 50
             },
             companyName: {
                 type: String,

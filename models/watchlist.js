@@ -5,7 +5,7 @@ const Watchlist = mongoose.model(
     'watchlist',
     new mongoose.Schema(
         {
-            _id: {
+            symbol: {
                 type: String,
                 minlength: 1,
                 maxlength: 10
