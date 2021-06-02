@@ -57,7 +57,7 @@ const Portfolio = mongoose.model(
 function validate(body) {
     const history = Joi.object({
         quantity: Joi.number(),
-        tradePrice: Joi.number()
+        tradePrice: Joi.date()
     });
     const schema = Joi.object({
         symbol: Joi.string().min(1).max(50).required(),

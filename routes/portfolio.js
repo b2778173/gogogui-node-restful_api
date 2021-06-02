@@ -45,8 +45,8 @@ router.post('/', auth, async (req, res) => {
                 uid
             });
         }
-        await portfolio.save();
-        res.send({ result: portfolio });
+        const result = await portfolio.save();
+        res.send({ result });
     } catch (e) {
         res.status(400).send(e.message);
     }

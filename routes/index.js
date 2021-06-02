@@ -6,6 +6,7 @@ const market = require('./finnhub/market');
 const stock = require('./finnhub/stock');
 const portfolio = require('./portfolio');
 const watchlist = require('./watchlist');
+const profile = require('./profile');
 
 const app = express();
 
@@ -18,5 +19,6 @@ app.use('/api/news', market);
 app.use('/api/stock', stock);
 app.use('/api/portfolio', portfolio);
 app.use('/api/watchlist', watchlist);
+app.use('/api/profile', profile);
 
 module.exports = app;
