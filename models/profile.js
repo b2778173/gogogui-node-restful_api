@@ -33,7 +33,7 @@ const Profile = mongoose.model(
             },
             name: {
                 type: String,
-                required: true
+                default: ''
             },
             createTime: {
                 type: Date,
@@ -68,6 +68,10 @@ const Profile = mongoose.model(
                 required: true,
                 minlength: 1,
                 unique: true
+            },
+            photoURL: {
+                type: String,
+                default: ''
             }
         },
         { collection: 'profile' }
@@ -94,14 +98,15 @@ function validate(body) {
 
     const schema = Joi.object({
         username: Joi.string().required(),
-        name: Joi.string().required(),
+        name: Joi.string().required().allow(''),
         createTime: Joi.date(),
         email: Joi.string(),
         socialMedia,
         watchlist: Joi.array().items(watchlist),
         memo: Joi.string(),
         address,
-        uid: Joi.string()
+        uid: Joi.string(),
+        photoURL: Joi.string()
     });
 
     return schema.validate(body);
