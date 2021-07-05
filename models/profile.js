@@ -1,21 +1,30 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
-const Watchlist = new mongoose.Schema({
-    symbol: String,
-    memo: String
-});
+const Watchlist = new mongoose.Schema(
+    {
+        symbol: String,
+        memo: String
+    },
+    { _id: false }
+);
 
-const SocialMedia = new mongoose.Schema({
-    facebookId: String,
-    lineId: String
-});
-const Address = new mongoose.Schema({
-    country: String,
-    city: String,
-    zipCode: String,
-    street: String
-});
+const SocialMedia = new mongoose.Schema(
+    {
+        facebookId: String,
+        lineId: String
+    },
+    { _id: false }
+);
+const Address = new mongoose.Schema(
+    {
+        country: String,
+        city: String,
+        zipCode: String,
+        street: String
+    },
+    { _id: false }
+);
 
 const Profile = mongoose.model(
     'profile',
@@ -70,8 +79,8 @@ const Profile = mongoose.model(
                 unique: true
             },
             photoURL: {
-                type: String,
-                default: ''
+                data: Buffer,
+                contentType: String
             }
         },
         { collection: 'profile' }

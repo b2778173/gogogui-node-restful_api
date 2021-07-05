@@ -12,6 +12,10 @@ router.get('/', auth, async (req, res) => {
         if (!profile) {
             return res.status(404).send({ message: 'profile not found' });
         }
+        // delete unecessary key
+        profile.socialMedia = undefined;
+        console.log(profile);
+
         res.send({ result: profile });
     } catch (e) {
         res.status(400).send({ message: e.message });
@@ -64,7 +68,7 @@ router.post('/', auth, async (req, res) => {
 router.put('/', auth, async (req, res) => {
     logger(req.body);
     const { uid } = req.currentUser;
-    const { socialMedia, memo, address, username, name, watchlist } = req.body;
+    const { socialMedia, memo, address, username, name, watchlist, email, photoURL } = req.body;
     try {
         // validation
         const { error } = validate(req.body);
@@ -75,8 +79,8 @@ router.put('/', auth, async (req, res) => {
 
         const profile = await Profile.findOneAndUpdate(
             { uid },
-            { socialMedia, memo, address, username, name, watchlist },
-            { new: true }
+            { socialMedia, memo, address, username, name, watchlist, email, photoURL },
+            { new: true, upsert: true }
         );
         if (!profile) {
             return res.status(404).send({ message: 'profile not found' });

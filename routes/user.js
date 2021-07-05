@@ -1,5 +1,6 @@
 const express = require('express');
 const admin = require('firebase-admin');
+
 // verify token middleware (idToken need be granted from frontend)
 const auth = require('../middleware/auth');
 
@@ -31,15 +32,7 @@ router.get('/', auth, (req, res) => {
 // create user
 router.post('/', auth, (req, res) => {
     console.log(req.body);
-    const {
-        email,
-        emailVerified,
-        phoneNumber,
-        password,
-        displayName,
-        photoURL,
-        disabled
-    } = req.body;
+    const { email, emailVerified, phoneNumber, password, displayName, photo, disabled } = req.body;
     admin
         .auth()
         .createUser({
@@ -48,7 +41,7 @@ router.post('/', auth, (req, res) => {
             phoneNumber,
             password,
             displayName,
-            photoURL,
+            photo,
             disabled
         })
         .then((userRecord) => {
