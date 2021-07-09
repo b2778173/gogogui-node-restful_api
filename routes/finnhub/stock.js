@@ -1,11 +1,13 @@
 const express = require('express');
 const axios = require('axios');
 const finnhubClient = require('./index');
+const logger = require('debug')('General');
 
 const router = express.Router();
 
 // Stock candles
 router.get('/candle', (req, res) => {
+    logger(req.query);
     const { symbol, resolution, from, to } = req.query;
     finnhubClient.stockCandles(symbol, resolution, from, to, {}, async (error, data) => {
         if (error) {
@@ -29,10 +31,11 @@ router.get('/candle', (req, res) => {
 
 // symbol lookup
 router.get('/lookup', async (req, res) => {
+    logger(req.query);
     const { symbol } = req.query;
     try {
         const r = await axios(
-            `https://finnhub.io/api/v1/search?q=${symbol}&token=c07nu3v48v6retjanc0g`
+            `https://finnhub.io/api/v1/search?q=${symbol}&token=${process.env.API_KEY}`
         );
         res.send(r.data);
     } catch (e) {
@@ -55,9 +58,11 @@ router.get('/quote', (req, res) => {
 
 // get all symbol list
 router.get('/getSymbolList', async (req, res) => {
+    logger(req.query);
+    const { exchange } = req.query;
     try {
         const r = await axios(
-            `https://finnhub.io/api/v1/stock/symbol?exchange=US&token=${process.env.API_KEY}`
+            `https://finnhub.io/api/v1/stock/symbol?exchange=${exchange}&token=${process.env.API_KEY}`
         );
         res.send({ result: r.data });
     } catch (e) {
