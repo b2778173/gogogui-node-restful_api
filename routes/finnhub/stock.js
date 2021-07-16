@@ -1,7 +1,7 @@
 const express = require('express');
 const axios = require('axios');
-const finnhubClient = require('./index');
 const logger = require('debug')('General');
+const finnhubClient = require('./index');
 
 const router = express.Router();
 
