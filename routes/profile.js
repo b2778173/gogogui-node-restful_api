@@ -1,11 +1,10 @@
 const express = require('express');
 const logger = require('debug')('General');
-const auth = require('../middleware/auth');
 
 const router = express.Router();
 const { Profile, validate } = require('../models/profile');
 
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
     const { uid } = req.currentUser;
     try {
         const profile = await Profile.findOne({ uid });
@@ -22,7 +21,7 @@ router.get('/', auth, async (req, res) => {
     }
 });
 // delete = quantity -1
-router.post('/', auth, async (req, res) => {
+router.post('/', async (req, res) => {
     logger(req.body);
     try {
         const { uid } = req.currentUser;
@@ -65,7 +64,7 @@ router.post('/', auth, async (req, res) => {
     }
 });
 
-router.put('/', auth, async (req, res) => {
+router.put('/', async (req, res) => {
     logger(req.body);
     const { uid } = req.currentUser;
     const { socialMedia, memo, address, username, name, watchlist, email, photoURL } = req.body;
@@ -92,7 +91,7 @@ router.put('/', auth, async (req, res) => {
     }
 });
 
-router.delete('/', auth, async (req, res) => {
+router.delete('/', async (req, res) => {
     logger(req.body);
     const { uid } = req.currentUser;
     try {
